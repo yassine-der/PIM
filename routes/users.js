@@ -28,7 +28,7 @@ const upload = multer({
 const { authUser, getuserProfile, registerUser, updateUserProfile, getusers, deleteUser, getUserById, updateUser, googleLogin } = require('../controllers/userController')
 const { protect } = require('../middlware/authmiddlware')
     //router.route('/').post(upload.single('image'),registerUser).get(protect,getusers)
-router.route('/').post(upload.single('image'), registerUser).get(getusers)
+router.route('/').post(registerUser).get(getusers)
 router.post('/login', authUser)
 router.route('/profile')
     .get(protect, getuserProfile)

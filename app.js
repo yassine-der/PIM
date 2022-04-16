@@ -7,6 +7,7 @@ const dotenv = require('dotenv')
 var bodyParser = require('body-parser')
 const { notFound, errorHandler } = require('./middlware/errorMiddlware')
 const connectDB = require('./config/db')
+const morgan = require('morgan')
 
 
 var indexRouter = require('./routes/index');
@@ -23,6 +24,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
 
 app.get('/', (req, res) => {
     res.send('API is running...')

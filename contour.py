@@ -19,6 +19,10 @@ import numpy as np
 import urllib.request
 import sys
 import json
+import string
+
+import random
+
 
 
 def empty(a):
@@ -26,7 +30,7 @@ def empty(a):
 
 cv2.namedWindow("Parameters")
 cv2.resizeWindow("Parameters",640,240)
-cv2.createTrackbar("Threshold1","Parameters",60,255,empty)
+cv2.createTrackbar("Threshold1","Parameters",200,255,empty)
 cv2.createTrackbar("Threshold2","Parameters",20,255,empty)
 cv2.createTrackbar("Area","Parameters",5000,30000,empty)
 s = sys.argv[1]
@@ -64,6 +68,16 @@ cnt = max(contours,key = cv2.contourArea)
 print(cnt)
 
 cv2.drawContours(imgContour, cnt, -1, (255, 0, 255), 5)
+#cv2.imwrite('C:/Users/yassine derbel/Pictures/Camera Roll/contoureImage.jpg', img)
+#f = "oooo"
+n = random.randint(0,3000)
+
+cv2.imwrite("./uploads/contoure"+str(n)+"Image.jpg",imgContour)
+with open("contourName.txt", "w+") as file:
+ 
+    file.write("./uploads/contoure"+str(n)+"Image.jpg")
+    file.close()
+
 peri = cv2.arcLength(cnt, True)
 #print(peri)
 
@@ -95,10 +109,25 @@ with open("cordonne.txt", "w+") as file:
 
 
     file.close()
-with open("cordonne.txt", "read") as file:
-    resp = file.readline()
+with open("cordonneY.txt", "w+") as file:
+ 
+    #file.write("{\"corX\":")
+    #file.write("[")
+    for j in cnt:
+        #file.write( "\""+str(i[0][0])+"\""+",")
+        file.write(str(j[0][1])+",")
+    #file.write("]")
+
 
 
     file.close()
+    """
+with open("cordonne.txt", "read") as file:
+resp = file.readline()
+
+
+file.close()
 print(json.dump(resp))
 sys.stdout.flush()
+    """
+
