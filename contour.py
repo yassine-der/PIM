@@ -70,13 +70,6 @@ print(cnt)
 cv2.drawContours(imgContour, cnt, -1, (255, 0, 255), 5)
 #cv2.imwrite('C:/Users/yassine derbel/Pictures/Camera Roll/contoureImage.jpg', img)
 #f = "oooo"
-n = random.randint(0,3000)
-
-cv2.imwrite("./uploads/contoure"+str(n)+"Image.jpg",imgContour)
-with open("contourName.txt", "w+") as file:
- 
-    file.write("./uploads/contoure"+str(n)+"Image.jpg")
-    file.close()
 
 peri = cv2.arcLength(cnt, True)
 #print(peri)
@@ -121,6 +114,15 @@ with open("cordonneY.txt", "w+") as file:
 
 
     file.close()
+
+n = random.randint(0,3000)
+
+cv2.imwrite("./uploads/contoure"+str(n)+"Image.jpg",imgContour)
+with open("contourName.txt", "w+") as file:
+ 
+    file.write("./uploads/contoure"+str(n)+"Image.jpg")
+    file.close()
+
     """
 with open("cordonne.txt", "read") as file:
 resp = file.readline()

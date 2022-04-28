@@ -42,9 +42,9 @@ const { addImage, pythonFun, getImageById, getMyImages } = require('../controlle
 const { protect } = require('../middlware/authmiddlware')
 
 
-router.route('/').post(protect, upload.single('image'), addImage).get(getMyImages)
-router.route('/:id').put(protect, upload1.single('image'), pythonFun)
-router.route('/:id').get(protect, getImageById)
+router.route('/').post(upload.single('image'), addImage).get(getMyImages)
+router.route('/:id').put(upload1.single('image'), pythonFun)
+router.route('/:id').get(getImageById)
     //router.route('/lala').get(protect, pythonFun)
     //.put(protect, ProprietaireDeStade, addLigueToStade)
 

@@ -8,11 +8,11 @@ const fs = require('fs')
 const addImage = AsyncHandler(async(req, res) => {
     const imageOfPatch = await Patch.create({
         image: req.file.path,
-        user: req.user._id,
+        //user: req.user._id,
 
     })
     const imageCreated = await imageOfPatch.save()
-    res.status(201).json({ imageCreated })
+    res.status(201).json(imageCreated._id)
 
 })
 
@@ -26,7 +26,7 @@ const pythonFun = AsyncHandler(async(req, res) => {
     const patch = await Patch.findById(req.params.id)
     if (patch) {
         //console.log(patch.image)
-        const pythonScript = spawn('python', ['contour.py', patch.image])
+        const pythonScript = await spawn('python', ['contour.py', patch.image])
         pythonScript.stdout.on('data', (data) => {
 
             data1 = data.toString();
@@ -40,41 +40,38 @@ const pythonFun = AsyncHandler(async(req, res) => {
 
             })
             //res.send(data1)
-        fs.readFile('contourName.txt', 'utf8', async(err, url) => {
-            if (err) {
-                console.error(err)
-                return
-            }
 
-            console.log(url)
-
-
-
-            patch.image = url
-
-
-
-
-        })
         fs.readFile('cordonne.txt', 'utf8', async(err, url) => {
-            if (err) {
-                console.error(err)
-                return
-            }
-            console.log(url)
-            patch.corX = url
-        })
-        fs.readFile('cordonneY.txt', 'utf8', async(err, url) => {
-            if (err) {
-                console.error(err)
-                return
-            }
-            console.log(url)
-            patch.corY = url
-        })
-        const updatePatch = await patch.save()
+                if (err) {
+                    console.error(err)
+                    return
+                }
+                patch.corX = url
+                fs.readFile('cordonneY.txt', 'utf8', async(err, url) => {
+                    if (err) {
+                        console.error(err)
+                        return
+                    }
+                    patch.corY = url
 
-        res.status(201).json({ updatePatch })
+                    const updatePatch = await patch.save()
+
+                    res.status(201).json({ updatePatch })
+
+                })
+
+            })
+            /*
+                    fs.readFile('contourName.txt', 'utf8', async(err, url) => {
+                        if (err) {
+                            console.error(err)
+                            return
+                        }
+                        console.log(url)
+                        patch.image = url
+
+                    })
+                    */
 
 
     } else {
