@@ -38,11 +38,11 @@ const upload1 = multer({
     fileFilter: fileFilter
 })
 
-const { addImage, pythonFun, getImageById, getMyImages } = require('../controllers/patchController')
+const { addImage, pythonFun, getImageById, getPatch } = require('../controllers/patchController')
 const { protect } = require('../middlware/authmiddlware')
 
 
-router.route('/').post(upload.single('image'), addImage).get(getMyImages)
+router.route('/').post(upload.single('image'), addImage).get(getPatch)
 router.route('/:id').put(upload1.single('image'), pythonFun)
 router.route('/:id').get(getImageById)
     //router.route('/lala').get(protect, pythonFun)

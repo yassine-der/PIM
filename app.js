@@ -13,6 +13,7 @@ const morgan = require('morgan')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var patchRouter = require('./routes/patchs');
+var passageRouter = require('./routes/passage');
 
 
 dotenv.config()
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 })
 app.use('/user', usersRouter)
 app.use('/patch', patchRouter)
+app.use('/passage', passageRouter)
 
 app.use('/uploads', express.static('uploads'))
 

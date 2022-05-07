@@ -14,9 +14,25 @@ const patchSchema = new mongoose.Schema({
     },
     corX: {
         type: String,
+
     },
     corY: {
         type: String,
+    },
+    date: {
+        type: String,
+        required: true,
+
+    },
+    nom: {
+        type: String,
+        required: true,
+
+    },
+    description: {
+        type: String,
+        required: true,
+
     },
 
 

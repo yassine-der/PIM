@@ -6,19 +6,38 @@ const { argv } = require('process')
 const fs = require('fs')
 
 const addImage = AsyncHandler(async(req, res) => {
+
+    const { nom, date, description } = req.body
+
+    const userExist = await Patch.findOne({ nom })
+
+    if (userExist) {
+        res.status(400)
+        throw new Error('patch Aleardy exists')
+    }
+
     const imageOfPatch = await Patch.create({
         image: req.file.path,
+        description,
+        nom,
+        date,
         //user: req.user._id,
 
     })
     const imageCreated = await imageOfPatch.save()
-    res.status(201).json(imageCreated._id)
+    res.status(201).json(imageCreated)
 
 })
 
 const getMyImages = AsyncHandler(async(res, req) => {
     const my = await Patch.find({ user: req.user._id })
-    res.json(my)
+    res.json({
+        _id: my._id,
+        nom: my.nom,
+        date: my.date,
+        description: my.description,
+
+    })
 
 })
 const pythonFun = AsyncHandler(async(req, res) => {
@@ -134,5 +153,11 @@ const getImageById = AsyncHandler(async(req, res) => {
     }
 
 })
+const getPatch = AsyncHandler(async(req, res) => {
 
-module.exports = { addImage, pythonFun, getImageById, getMyImages }
+    const ligues = await Patch.find({})
+
+    res.json(ligues)
+})
+
+module.exports = { addImage, pythonFun, getImageById, getMyImages, getPatch }
