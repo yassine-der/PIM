@@ -28,7 +28,12 @@ const getuserProfile = AsyncHandler(async(req, res) => {
     const user = await User.findById(req.user._id)
 
     if (user) {
-        res.json(user)
+        res.json({
+            _id: user._id,
+            nom: user.nom,
+            prenom: user.prenom,
+            userName: user.userName,
+        })
     } else {
         res.status(404)
         throw new Error('user not found')
@@ -47,6 +52,8 @@ const registerUser = AsyncHandler(async(req, res) => {
     }
 
     const user = await User.create({
+        image: req.file.path,
+
         //image: req.file.path,
         nom,
         prenom,
@@ -129,6 +136,7 @@ const updateUser = AsyncHandler(async(req, res) => {
         throw new Error('user not found')
     }
 })
+
 const googleLogin = AsyncHandler(async(req, res) => {
     const user = await User.findOne(req.body.userName)
     if (user) {

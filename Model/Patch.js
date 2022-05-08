@@ -21,17 +21,17 @@ const patchSchema = new mongoose.Schema({
     },
     date: {
         type: String,
-        required: true,
+        //required: true,
 
     },
     nom: {
         type: String,
-        required: true,
+        //required: true,
 
     },
     description: {
         type: String,
-        required: true,
+        //required: true,
 
     },
 
